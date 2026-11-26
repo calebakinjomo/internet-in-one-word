@@ -9,11 +9,18 @@ behaviour), and surprising next to the obvious words.
 import os
 
 ENTRY = "Doomscroll"
+MAX_ENTRY_CHARS = 30
+OUTPUT_PATH = "/output/entry.txt"
 
 
 def main() -> None:
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
+    if len(ENTRY) > MAX_ENTRY_CHARS:
+        raise ValueError(
+            f"Entry {ENTRY!r} is {len(ENTRY)} chars, over the "
+            f"{MAX_ENTRY_CHARS}-char limit"
+        )
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(ENTRY)
 
 
